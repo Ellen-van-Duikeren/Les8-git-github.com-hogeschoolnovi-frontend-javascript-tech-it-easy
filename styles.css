@@ -41,6 +41,7 @@ p {
 button {
     background-color: yellowgreen;
     margin-right: 20px;
+    margin-bottom: 20px;
     padding: 5px;
     border-radius: 10px;
 }

@@ -348,16 +348,15 @@ const tvsSizes = inventory.map((tv) => {
 });
 console.log(tvsSizes);
 
-
 for (let i = 0; i < inventory.length; i++) {
-        document.getElementById("tvs").innerHTML += `
+    document.getElementById("tvs").innerHTML += `
         <p>...</p>
         <p>${tvsBrandTypeNames[i]}</p>
         <p>${tvsPrices[i]}</p>
         <p>${tvsSizes[i]}</p>
         <p>...</p>
     `;
-};
+}
 
 // <!--        error deze geeft alle schermen weer van alle tvs-->
 // inventory.map((tv)=> {
@@ -371,36 +370,74 @@ for (let i = 0; i < inventory.length; i++) {
 // });
 
 
-
 /* BONUSOPDRACHT 1------------------------------------------------------------------------------------*/
 /* opdracht 1b ---------------------------------------------------------------------------*/
-// uitverkochte exemplaren
-function outOfStock () {
-    const tvOutOfStock = inventory.filter((tv) => {
-        return tv.originalStock - tv.sold === 0;
-    });
-    console.log(tvOutOfStock);
-}
 
-
-// ambilight
-function ambiLight () {
-    const ambilight = inventory.filter((tv) => {
-        return tv.options.ambiLight;
-    });
-    console.log(ambilight);
-}
-
-
-// sorteer op prijs
-function sortPrice () {
+// sorteer op prijs------------------------------------------------------------
+function handleClickSortPrice() {
+    console.log("Sorted by price");
     const prices = inventory.sort((a, b) => {
         return a.price - b.price;
     })
     console.log(prices);
+    for (let i = 0; i < prices.length; i++) {
+        document.getElementById("tvs-click-events").innerHTML += `
+        <p>...</p>
+        <p>${tvsBrandTypeNames[i]}</p>
+        <p>${tvsPrices[i]}</p>
+        <p>${tvsSizes[i]}</p>
+        <p>...</p>
+    `;
+    }
 }
 
+const sortPriceButton = document.getElementById('sort-price-button');
+sortPriceButton.addEventListener('click', handleClickSortPrice);
 
+
+// ambilight-------------------------------------------------------------------
+function handleClickAmbiLight() {
+    console.log("Ambilight TV's");
+    const ambilight = inventory.filter((tv) => {
+        return tv.options.ambiLight;
+    });
+    console.log(ambilight);
+    for (let i = 0; i < ambilight.length; i++) {
+        document.getElementById("tvs-click-events").innerHTML += `
+        <p>...</p>
+        <p>${tvsBrandTypeNames[i]}</p>
+        <p>${tvsPrices[i]}</p>
+        <p>${tvsSizes[i]}</p>
+        <p>...</p>
+    `;
+    }
+}
+
+const ambiLightButton = document.getElementById('ambiLight');
+ambiLightButton.addEventListener('click', handleClickAmbiLight);
+
+
+// uitverkochte exemplaren-------------------------------------------------------
+function handleClickOutOfStock() {
+    console.log("Out of Stock");
+    const tvOutOfStock = inventory.filter((tv) => {
+        return tv.originalStock - tv.sold === 0;
+    });
+    console.log(tvOutOfStock);
+    for (let i = 0; i < tvOutOfStock.length; i++) {
+        document.getElementById("tvs-click-events").innerHTML += `
+        <p>...</p>
+        <p>${tvsBrandTypeNames[i]}</p>
+        <p>${tvsPrices[i]}</p>
+        <p>${tvsSizes[i]}</p>
+        <p>...</p>
+    `;
+    }
+}
+
+const outOfStockButton = document.getElementById('out-of-stock-button');
+outOfStockButton.addEventListener('click', handleClickOutOfStock);
 
 
 /* BONUSOPDRACHT 2------------------------------------------------------------------------------------*/
+// zie opdracht 4e
