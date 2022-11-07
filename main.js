@@ -185,7 +185,8 @@ const ambilight = inventory.filter((tv) => {
 console.log(ambilight);
 
 /* opdracht 1d ---------------------------------------------------------------------------*/
-// console.log("\nOpdracht 1d:");
+console.log("\nOpdracht 1d:");
+//uitgecomment om volgende opdrachten originele volgorde te hebben in inventory
 // const prices = inventory.sort((a, b) => {
 //     return a.price - b.price;
 // })
@@ -198,10 +199,6 @@ console.log("\nOpdracht 2a:");
 // benader voor elke tv hoeveel er verkocht zijn via sold
 // tel deze allemaal bij elkaar op in een for loop
 
-// const tvSold = inventory.map((tv) => {
-//     return tv.sold;
-// });
-
 const tvSold = inventory.map((tv) => tv.sold);
 let soldTotal = 0;
 for (let i = 0; i < tvSold.length; i++) {
@@ -211,9 +208,11 @@ console.log(soldTotal);
 
 /* opdracht 2b ---------------------------------------------------------------------------*/
 console.log("\nOpdracht 2b:");
+// langere versie:
 // const tvSolds = document.getElementById("tvsSold");
 // tvSolds.textContent = `${soldTotal}`;
 
+//kortere versie:
 document.getElementById("tvsSold").textContent = `${soldTotal}`;
 
 
@@ -226,7 +225,7 @@ let tvBoughtTotal = 0
 for (let i = 0; i < tvBought.length; i++) {
     tvBoughtTotal += tvBought[i];
 }
-;
+
 console.log(tvBoughtTotal);
 
 /* opdracht 2d ---------------------------------------------------------------------------*/
@@ -242,7 +241,7 @@ tvsSell.textContent = `${tvBoughtTotal - soldTotal}`;
 
 /* OPDRACHT 3 ----------------------------------------------------------------------------------------*/
 /* opdracht 3a---------------------------------------------------------------------------*/
-// console.log("\nOpdracht 3a:");
+console.log("\nOpdracht 3a:");
 // const tvBrands = inventory.map((tv) => {
 //     return tv.brand;
 // });
@@ -260,7 +259,7 @@ console.log("\nOpdracht 3b:");
 //     listTvBrand.textContent = `${tvBrands}`;
 // }
 
-// dit wordt een lijst onder elkaar
+// dit wordt een nette lijst onder elkaar
 function tvBrand(array) {
     const tvBrands = array.map((tv) => tv.brand);
     tvBrands.map((tv) => {
@@ -296,7 +295,7 @@ price(inventory);
 /* opdracht 4c---------------------------------------------------------------------------*/
 console.log("\nOpdracht 4c:");
 
-function availableSizes(array) {
+function availableSizes() {
     let sizes = "";
     for (let i = 0; i < inventory[0].availableSizes.length; i++) {
         if (i === inventory[0].availableSizes.length - 1) {
@@ -311,7 +310,7 @@ function availableSizes(array) {
 availableSizes(inventory);
 
 /* opdracht 4d---------------------------------------------------------------------------*/
-// console.log("\nOpdracht 4d:");
+console.log("\nOpdracht 4d:");
 // document.getElementById("tvs").innerHTML = `
 // <p></p>
 // <p>...</p>
@@ -325,16 +324,20 @@ availableSizes(inventory);
 
 /* opdracht 4e---------------------------------------------------------------------------*/
 console.log("\nOpdracht 4e:");
+
+//brandtypenames
 const tvsBrandTypeNames = inventory.map((tv) => {
     return `${tv.brand} ${tv.type} - ${tv.name}`;
 });
 console.log(tvsBrandTypeNames);
 
+//prices
 const tvsPrices = inventory.map((tv) => {
     return `€ ${tv.price},-`;
 })
 console.log(tvsPrices);
 
+//tvSizes met een for loop
 const tvsSizes = inventory.map((tv) => {
     let sizes = "";
     for (let i = 0; i < tv.availableSizes.length; i++) {
@@ -348,6 +351,16 @@ const tvsSizes = inventory.map((tv) => {
 });
 console.log(tvsSizes);
 
+// tvSizes met 2 map methodes, maar dit werkt niet omdat ie tv.map niet kent
+// const mapSizes = inventory.map((tv) => {
+//     const mapSize = tv.map((size) => {
+//         return `${tv.size} inch (${Math.round(tv.size * 2.54)} cm) | `;
+//     });
+// })
+// console.log(mapSizes);
+
+
+//injecting
 for (let i = 0; i < inventory.length; i++) {
     document.getElementById("tvs").innerHTML += `
         <p>...</p>
@@ -358,63 +371,102 @@ for (let i = 0; i < inventory.length; i++) {
     `;
 }
 
-// <!--        error deze geeft alle schermen weer van alle tvs-->
-// inventory.map((tv)=> {
-//     document.getElementById("tvs").innerHTML += `
-//         <p>...</p>
-//         <p>${tv.brand} ${tv.type} - ${tv.name}</p>
-//         <p>€ ${tv.price},-</p>
-//         <p>${tvsSizes}</p>
-//         <p>...</p>
-//     `;
-// });
-
 
 /* BONUSOPDRACHT 1------------------------------------------------------------------------------------*/
 /* opdracht 1b ---------------------------------------------------------------------------*/
 
 // sorteer op prijs------------------------------------------------------------
-function handleClickSortPrice() {
+console.log("Bonusopdracht 1b");
+
+//function voor het sorteren
+function handleClickSortPrice(arr) {
     console.log("Sorted by price");
-    const prices = inventory.sort((a, b) => {
+    const prices = arr.sort((a, b) => {
         return a.price - b.price;
     })
     console.log(prices);
-    for (let i = 0; i < prices.length; i++) {
-        document.getElementById("tvs-click-events").innerHTML += `
-        <p>...</p>
-        <p>${tvsBrandTypeNames[i]}</p>
-        <p>${tvsPrices[i]}</p>
-        <p>${tvsSizes[i]}</p>
-        <p>...</p>
-    `;
-    }
 }
 
+//functions voor het weergeven van delen van de tv's
+function createTvBrandName(tv) {
+    return `${tv.brand} ${tv.type} - ${tv.name}`;
+}
+
+function createTvPrice(tv) {
+    return `€ ${tv.price},-`;
+}
+
+function createScreensizes(tv) {
+    let sizes = "";
+    for (let i = 0; i < tv.availableSizes.length; i++) {
+        if (i === tv.availableSizes.length - 1) {
+            sizes += `${tv.availableSizes[i]} inch (${Math.round(tv.availableSizes[i] * 2.54)} cm)`;
+        } else {
+            sizes += `${tv.availableSizes[i]} inch (${Math.round(tv.availableSizes[i] * 2.54)} cm) | `;
+        }
+    }
+    return sizes;
+}
+
+//function voor het weergeven van de tv's
+function displayTvs(tvArray) {
+    let tvs = "";
+    tvArray.map((tv) => {
+        //brandtypename
+        const tvsBrandTypeName = createTvBrandName(tv);
+        console.log(tvsBrandTypeName);
+        //prices
+        const tvsPrice = createTvPrice(tv)
+        console.log(tvsPrice);
+        //beeldscherm
+        const tvsSizes = createScreensizes(tv);
+        console.log(tvsSizes);
+        tvs += `
+        ...
+        ${tvsBrandTypeName}
+        ${tvsPrice}
+        ${tvsSizes}
+        ...
+        `;
+    })
+    return tvs;
+}
+
+const displayAllTvs = displayTvs(inventory);
+
+
 const sortPriceButton = document.getElementById('sort-price-button');
-sortPriceButton.addEventListener('click', handleClickSortPrice);
+sortPriceButton.addEventListener('click', () => {
+    handleClickSortPrice(inventory);
+    const displayAllTvs = displayTvs(inventory);
+    document.getElementById("tvs-click-events").innerHTML += `
+        <br>
+        <h3>Gesorteerd op prijs</h3>
+        <p>${displayAllTvs}</p>
+    `;
+});
 
 
 // ambilight-------------------------------------------------------------------
-function handleClickAmbiLight() {
+function handleClickAmbiLight(array) {
     console.log("Ambilight TV's");
-    const ambilight = inventory.filter((tv) => {
+    const ambilight = array.filter((tv) => {
         return tv.options.ambiLight;
     });
     console.log(ambilight);
-    for (let i = 0; i < ambilight.length; i++) {
-        document.getElementById("tvs-click-events").innerHTML += `
-        <p>...</p>
-        <p>${tvsBrandTypeNames[i]}</p>
-        <p>${tvsPrices[i]}</p>
-        <p>${tvsSizes[i]}</p>
-        <p>...</p>
-    `;
-    }
 }
 
-const ambiLightButton = document.getElementById('ambiLight');
-ambiLightButton.addEventListener('click', handleClickAmbiLight);
+const ambiLightButton = document.getElementById('ambiLight-button');
+ambiLightButton.addEventListener('click', () => {
+    const ambis = handleClickAmbiLight(inventory);
+    const displayAmbis = displayTvs(ambilight);
+    document.getElementById("tvs-click-events").innerHTML += `
+        <br>
+        <h3>Alleen met ambilight</h3>
+        <p>${displayAmbis}</p>
+        <p>...</p>
+    `;
+})
 
 
 // uitverkochte exemplaren-------------------------------------------------------
@@ -424,20 +476,21 @@ function handleClickOutOfStock() {
         return tv.originalStock - tv.sold === 0;
     });
     console.log(tvOutOfStock);
-    for (let i = 0; i < tvOutOfStock.length; i++) {
-        document.getElementById("tvs-click-events").innerHTML += `
-        <p>...</p>
-        <p>${tvsBrandTypeNames[i]}</p>
-        <p>${tvsPrices[i]}</p>
-        <p>${tvsSizes[i]}</p>
-        <p>...</p>
-    `;
-    }
 }
 
 const outOfStockButton = document.getElementById('out-of-stock-button');
-outOfStockButton.addEventListener('click', handleClickOutOfStock);
+outOfStockButton.addEventListener('click', () => {
+    const slods = handleClickOutOfStock(inventory);
+    const displaySolds = displayTvs(tvOutOfStock);
+    document.getElementById("tvs-click-events").innerHTML += `
+        <br>
+        <h3>Uitverkochte exemplaren</h3>
+        <p>${displaySolds}</p>
+        <p>...</p>
+    `;
+})
 
 
 /* BONUSOPDRACHT 2------------------------------------------------------------------------------------*/
 // zie opdracht 4e
+
