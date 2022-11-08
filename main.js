@@ -396,6 +396,7 @@ function createTvPrice(tv) {
     return `€ ${tv.price},-`;
 }
 
+// nav feedback: onderstaande kan ook met functie join
 function createScreensizes(tv) {
     let sizes = "";
     for (let i = 0; i < tv.availableSizes.length; i++) {
@@ -407,6 +408,7 @@ function createScreensizes(tv) {
     }
     return sizes;
 }
+
 
 //function voor het weergeven van de tv's
 function displayTvs(tvArray) {
@@ -472,9 +474,7 @@ ambiLightButton.addEventListener('click', () => {
 // uitverkochte exemplaren-------------------------------------------------------
 function handleClickOutOfStock() {
     console.log("Out of Stock");
-    const tvOutOfStock = inventory.filter((tv) => {
-        return tv.originalStock - tv.sold === 0;
-    });
+    const tvOutOfStock = inventory.filter((tv) => tv.originalStock === tv.sold);
     console.log(tvOutOfStock);
 }
 
@@ -493,4 +493,3 @@ outOfStockButton.addEventListener('click', () => {
 
 /* BONUSOPDRACHT 2------------------------------------------------------------------------------------*/
 // zie opdracht 4e
-
